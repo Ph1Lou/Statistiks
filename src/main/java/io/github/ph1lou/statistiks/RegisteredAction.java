@@ -47,11 +47,11 @@ public class RegisteredAction {
         return event;
     }
 
-    public UUID getUuid() {
+    public @Nullable UUID getUuid() {
         return uuid;
     }
 
-    public List<UUID> getUuidS() {
+    public @Nullable List<UUID> getUuidS() {
         return uuidS;
     }
 

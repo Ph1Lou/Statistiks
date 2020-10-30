@@ -41,7 +41,7 @@ public class GameReview {
         this.name=api.getGameName();
         for(UUID uuid:api.getPlayersWW().keySet()){
             PlayerWW playerWW = api.getPlayersWW().get(uuid);
-            PlayerReview playerReview= new PlayerReview(uuid,playerWW.getRole().getDisplay(),playerWW.getLovers(),playerWW.getAmnesiacLoverUUID(),playerWW.getCursedLovers(),playerWW.getDeathTime(),playerWW.getKillers(),playerWW.getNbKill(),playerWW.getRole().getInfected(),playerWW.getName(),playerWW.isThief());
+            PlayerReview playerReview= new PlayerReview(uuid,playerWW.getRole().getKey(),playerWW.getLovers(),playerWW.getAmnesiacLoverUUID(),playerWW.getCursedLovers(),playerWW.getDeathTime(),playerWW.getKillers(),playerWW.getNbKill(),playerWW.getRole().getInfected(),playerWW.getName(),playerWW.isThief());
             players.add(playerReview);
         }
         this.duration=api.getScore().getTimer();

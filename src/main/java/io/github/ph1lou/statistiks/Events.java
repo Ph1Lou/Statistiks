@@ -3,7 +3,7 @@ package io.github.ph1lou.statistiks;
 import com.google.gson.Gson;
 import io.github.ph1lou.werewolfapi.GetWereWolfAPI;
 import io.github.ph1lou.werewolfapi.WereWolfAPI;
-import io.github.ph1lou.werewolfapi.enumlg.StateLG;
+import io.github.ph1lou.werewolfapi.enumlg.StateGame;
 import io.github.ph1lou.werewolfapi.events.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -101,7 +101,7 @@ public class Events implements Listener {
 
         if(main.getCurrentGameReview()==null) return;
 
-        if(!api.isState(StateLG.GAME)) return;
+        if(!api.isState(StateGame.GAME)) return;
 
         main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("kill",uuid, Collections.singletonList(killerUUID),api.getScore().getTimer()));
     }
@@ -352,6 +352,14 @@ public class Events implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
+    public void onLibrarianDeath(LibrarianDeathEvent event){
+
+        WereWolfAPI api = ww.getWereWolfAPI();
+        UUID uuid = event.getPlayerUUID();
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("librarian_death",uuid, null,api.getScore().getTimer()));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onEnquire(InvestigateEvent event){
 
         if(event.isCancelled()) return;
@@ -477,8 +485,8 @@ public class Events implements Listener {
 
         WereWolfAPI api = ww.getWereWolfAPI();
         UUID uuid = event.getSister();
-        UUID killer = event.getKiller();
-        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("sister_death",uuid, Collections.singletonList(killer),api.getScore().getTimer(),String.valueOf(event.getKiller())));
+
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("sister_death",uuid, event.getAllSisters(),api.getScore().getTimer(),String.valueOf(event.getKiller())));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -542,6 +550,22 @@ public class Events implements Listener {
         UUID uuid1=event.getPlayerUUID();
         UUID target = event.getTargetUUID();
         main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("angel_target_death",uuid1, Collections.singletonList(target),api.getScore().getTimer()));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onSKKill(SerialKillerEvent event){
+        WereWolfAPI api = ww.getWereWolfAPI();
+        UUID uuid1=event.getPlayerUUID();
+        UUID target = event.getTargetUUID();
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("sk_target_death",uuid1, Collections.singletonList(target),api.getScore().getTimer()));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onFallenAngelKill(FallenAngelTargetDeathEvent event){
+        WereWolfAPI api = ww.getWereWolfAPI();
+        UUID uuid1=event.getPlayerUUID();
+        UUID target = event.getTargetUUID();
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("fallen_angel_kill_target",uuid1, Collections.singletonList(target),api.getScore().getTimer()));
     }
     
     @EventHandler(priority = EventPriority.MONITOR)
@@ -616,8 +640,8 @@ public class Events implements Listener {
         if(event.isCancelled()) return;
 
         WereWolfAPI api = ww.getWereWolfAPI();
-        UUID uuid =event.getPlayerUUID();
-        UUID receipt =event.getTargetUUID();
+        UUID uuid = event.getPlayerUUID();
+        UUID receipt = event.getTargetUUID();
         main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("give_back_book",uuid, Collections.singletonList(receipt),api.getScore().getTimer(),event.getInfo()));
     }
 }

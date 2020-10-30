@@ -15,7 +15,7 @@ public class PlayerReview {
     private final List<UUID> killers;
     private final int nbKill;
     private final boolean infected;
-    private String name;
+    private final String name;
 
     public PlayerReview(UUID uuid, String display, List<UUID> lovers, UUID amnesiacLoverUUID, UUID cursedLovers, int deathTime, List<UUID> killers, int nbKill, boolean infected,String name, boolean isThief) {
         this.uuid=uuid;
