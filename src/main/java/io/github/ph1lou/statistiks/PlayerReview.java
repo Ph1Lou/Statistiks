@@ -1,36 +1,57 @@
 package io.github.ph1lou.statistiks;
 
+
+import io.github.ph1lou.werewolfapi.LoverAPI;
+import io.github.ph1lou.werewolfapi.PlayerWW;
+import io.github.ph1lou.werewolfapi.enums.RolesBase;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class PlayerReview {
 
 
     private final UUID uuid;
     private final String role;
-    private final UUID amnesiacLover;
-    private final List<UUID> lovers;
-    private final UUID cursedLover;
+    private UUID amnesiacLover=null;
+    private List<UUID> lovers=new ArrayList<>();
+    private UUID cursedLover=null;
     private final int deathTime;
     private final List<UUID> killers;
     private final int nbKill;
     private final boolean infected;
     private final String name;
 
-    public PlayerReview(UUID uuid, String display, List<UUID> lovers, UUID amnesiacLoverUUID, UUID cursedLovers, int deathTime, List<UUID> killers, int nbKill, boolean infected,String name, boolean isThief) {
-        this.uuid=uuid;
-        if(isThief){
+    public PlayerReview(PlayerWW playerWW) {
+
+        this.uuid=playerWW.getUUID();
+        if(playerWW.isThief()){
             this.role="werewolf.role.thief.display";
         }
-        else this.role=display;
-        this.lovers=lovers;
-        this.amnesiacLover=amnesiacLoverUUID;
-        this.cursedLover=cursedLovers;
-        this.deathTime=deathTime;
-        this.killers=killers;
-        this.nbKill=nbKill;
-        this.infected=infected;
-        this.name=name;
+        else this.role=playerWW.getRole().getKey();
+        for(LoverAPI loverAPI:playerWW.getLovers()) {
+
+            List<PlayerWW> lovers = new ArrayList<>(loverAPI.getLovers());
+            lovers.remove(playerWW);
+
+            if (!lovers.isEmpty()) {
+
+                if (loverAPI.isKey(RolesBase.AMNESIAC_LOVER.getKey())) {
+                    this.amnesiacLover = lovers.get(0).getUUID();
+                } else if (loverAPI.isKey(RolesBase.CURSED_LOVER.getKey())) {
+                    this.cursedLover = lovers.get(0).getUUID();
+                } else this.lovers = lovers.stream().map(PlayerWW::getUUID).collect(Collectors.toList());
+            }
+        }
+
+        this.deathTime=playerWW.getDeathTime();
+        this.killers=playerWW.getKillers().stream().filter(Objects::nonNull).map(PlayerWW::getUUID).collect(Collectors.toList());
+        this.nbKill=playerWW.getNbKill();
+        this.infected=playerWW.getRole().getInfected();
+        this.name=playerWW.getName();
     }
 
     public UUID getUuid() {

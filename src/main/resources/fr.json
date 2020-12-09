@@ -1,5 +1,13 @@
 {
   "werewolf": {
-    "stat": "Statistiks"
+    "stat": "Statistiks",
+    "message": "\n[§eLG UHC§r] Découvrez le récapitulatif de la partie précédente en §bCliquant ici\n",
+
+    "stats": {
+      "desc0": "Envoie les récapitulatifs",
+      "desc1":"des parties sur",
+      "desc2":"https://ph1lou.fr/werewolfstat",
+      "desc3":"Fait par Ph1lou"
+    }
   }
 }

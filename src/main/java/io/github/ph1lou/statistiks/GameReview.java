@@ -4,12 +4,13 @@ import io.github.ph1lou.werewolfapi.PlayerWW;
 import io.github.ph1lou.werewolfapi.WereWolfAPI;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GameReview {
 
     private final UUID gameUUID;
 
-    private List<UUID> winners;
+    private Set<UUID> winners;
 
     private String winnerCampKey;
 
@@ -31,17 +32,16 @@ public class GameReview {
     public GameReview(Main main, WereWolfAPI api) {
             this.api=api;
             this.gameUUID=api.getGameUUID();
-            this.playerSize=api.getPlayersWW().size();
+            this.playerSize=api.getScore().getPlayerSize();
             this.serverUUID=UUID.fromString(Objects.requireNonNull(main.getConfig().getString("server_uuid")));
     }
 
-    public void end(String winnerCampKey, List<UUID> winners){
+    public void end(String winnerCampKey, Set<PlayerWW> winners){
         this.winnerCampKey=winnerCampKey;
-        this.winners=winners;
+        this.winners=winners.stream().map(PlayerWW::getUUID).collect(Collectors.toSet());
         this.name=api.getGameName();
-        for(UUID uuid:api.getPlayersWW().keySet()){
-            PlayerWW playerWW = api.getPlayersWW().get(uuid);
-            PlayerReview playerReview= new PlayerReview(uuid,playerWW.getRole().getKey(),playerWW.getLovers(),playerWW.getAmnesiacLoverUUID(),playerWW.getCursedLovers(),playerWW.getDeathTime(),playerWW.getKillers(),playerWW.getNbKill(),playerWW.getRole().getInfected(),playerWW.getName(),playerWW.isThief());
+        for(PlayerWW playerWW:api.getPlayerWW()){
+            PlayerReview playerReview= new PlayerReview(playerWW);
             players.add(playerReview);
         }
         this.duration=api.getScore().getTimer();
@@ -55,7 +55,7 @@ public class GameReview {
         return gameUUID;
     }
 
-    public List<UUID> getWinners() {
+    public Set<UUID> getWinners() {
         return winners;
     }
 
