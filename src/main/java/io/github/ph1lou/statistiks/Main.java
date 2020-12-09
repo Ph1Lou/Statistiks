@@ -26,7 +26,7 @@ public class Main extends JavaPlugin implements Listener {
 
         ww = (GetWereWolfAPI) Bukkit.getPluginManager().getPlugin("WereWolfPlugin");
 
-        List<String> credit = Arrays.asList("werewolf.stats.desc0","werewolf.stats.desc1","werewolf.stats.desc2","werewolf.stats.desc3");
+        List<String> credit = Arrays.asList("werewolf.stats.desc0","werewolf.stats.desc1","werewolf.stats.desc2");
 
         RegisterManager registerManager = ww.getRegisterManager();
 
