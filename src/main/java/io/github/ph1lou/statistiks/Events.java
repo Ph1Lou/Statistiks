@@ -545,7 +545,7 @@ public class Events implements Listener {
         WereWolfAPI api = ww.getWereWolfAPI();
         PlayerWW playerWW=event.getPlayerWW();
         PlayerWW targetWW = event.getTargetWW();
-        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("angel_targetWW",playerWW, targetWW,api.getScore().getTimer()));
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("angel_target",playerWW, targetWW,api.getScore().getTimer()));
     }
 
 
@@ -554,7 +554,7 @@ public class Events implements Listener {
         WereWolfAPI api = ww.getWereWolfAPI();
         PlayerWW playerWW=event.getPlayerWW();
         PlayerWW targetWW = event.getTargetWW();
-        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("angel_targetWW_death",playerWW, targetWW,api.getScore().getTimer()));
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("angel_target_death",playerWW, targetWW,api.getScore().getTimer()));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -562,7 +562,7 @@ public class Events implements Listener {
         WereWolfAPI api = ww.getWereWolfAPI();
         PlayerWW playerWW=event.getPlayerWW();
         PlayerWW targetWW = event.getTargetWW();
-        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("sk_targetWW_death",playerWW, targetWW,api.getScore().getTimer()));
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("sk_target_death",playerWW, targetWW,api.getScore().getTimer()));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -570,7 +570,7 @@ public class Events implements Listener {
         WereWolfAPI api = ww.getWereWolfAPI();
         PlayerWW playerWW=event.getPlayerWW();
         PlayerWW targetWW = event.getTargetWW();
-        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("fallen_angel_kill_targetWW",playerWW, targetWW,api.getScore().getTimer()));
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("fallen_angel_kill_target",playerWW, targetWW,api.getScore().getTimer()));
     }
     
     @EventHandler(priority = EventPriority.MONITOR)
