@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -524,6 +525,13 @@ public class Events implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
+    public void onStudLoverReveal(StudLoverEvent event){
+        WereWolfAPI api = ww.getWereWolfAPI();
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("stud_lover",event.getPlayerWW(),event.getTargetWW(),api.getScore().getTimer()));
+
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onAmnesiacLoverReveal(RevealAmnesiacLoversEvent event){
         WereWolfAPI api = ww.getWereWolfAPI();
         main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("amnesiac_lover_revelation",event.getPlayerWWS(),api.getScore().getTimer()));
@@ -659,6 +667,76 @@ public class Events implements Listener {
         PlayerWW playerWW = event.getPlayerWW();
         PlayerWW targetWW = event.getTargetWW();
         main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("angel_regeneration",playerWW, targetWW,api.getScore().getTimer()));
+
+    }
+
+    @EventHandler
+    public void onRivalAnnouncement(RivalAnnouncementEvent event){
+        if(event.isCancelled()) return;
+
+        WereWolfAPI api = ww.getWereWolfAPI();
+
+
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("rival_announcement",event.getPlayerWW(),new HashSet<>(event.getPlayerWWs()),api.getScore().getTimer()));
+    }
+
+    @EventHandler
+    public void onLoverRivalDeath(RivalLoverDeathEvent event){
+
+        WereWolfAPI api = ww.getWereWolfAPI();
+
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("rival_lover_death",event.getPlayerWW(),new HashSet<>(event.getPlayerWWs()),api.getScore().getTimer()));
+    }
+
+    @EventHandler
+    public void onRivalLover(RivalLoverEvent event){
+
+        if(event.isCancelled()) return;
+
+        WereWolfAPI api = ww.getWereWolfAPI();
+
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("rival_lover",event.getPlayerWW(),event.getTargetWW(),api.getScore().getTimer()));
+    }
+
+    @EventHandler
+    public void onVillageIdiotResurrection(VillageIdiotEvent event){
+
+        if(event.isCancelled()) return;
+
+        WereWolfAPI api = ww.getWereWolfAPI();
+
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("idiot_village",event.getPlayerWW(),event.getTargetWW(),api.getScore().getTimer()));
+    }
+
+    @EventHandler
+    public void onMysticalReveal(MysticalWerewolfRevelationEvent event){
+
+        if(event.isCancelled()) return;
+
+        WereWolfAPI api = ww.getWereWolfAPI();
+
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("mystical_reveal",event.getPlayerWW(),event.getTargetWW(),api.getScore().getTimer()));
+    }
+
+    @EventHandler
+    public void onWereWolfChat(WereWolfChatEvent event){
+
+        if(event.isCancelled()) return;
+
+        WereWolfAPI api = ww.getWereWolfAPI();
+
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("werewolf_message",event.getPlayerWW(),api.getScore().getTimer(),event.getMessage()));
+
+    }
+
+    @EventHandler
+    public void onPriestessSpec(PriestessEvent event){
+
+        if(event.isCancelled()) return;
+
+        WereWolfAPI api = ww.getWereWolfAPI();
+
+        main.getCurrentGameReview().addRegisteredAction(new RegisteredAction("priestess_spec",event.getPlayerWW(),api.getScore().getTimer(),event.getCamp()));
 
     }
 }

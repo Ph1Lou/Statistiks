@@ -5,7 +5,6 @@ import io.github.ph1lou.werewolfapi.enums.Sounds;
 import io.github.ph1lou.werewolfapi.enums.UniversalMaterial;
 import io.github.ph1lou.werewolfapi.registers.AddonRegister;
 import io.github.ph1lou.werewolfapi.registers.RegisterManager;
-import io.github.ph1lou.werewolfapi.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,7 +48,6 @@ public class Main extends JavaPlugin implements Listener {
 
 
     }
-
 
     public GameReview getCurrentGameReview() {
         return currentGameReview;
